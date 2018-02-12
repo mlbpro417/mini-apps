@@ -6,7 +6,7 @@ console.log('hello world');
   // game board is 3x3 table
   // set up table in html
   // label them positions 1-9
-  // set up board to store data in object
+  // set up board to store data in array 
   var boardStorage = [
     [[], [], []], 
     [[], [], []], 
@@ -40,7 +40,7 @@ function modifyText() {
   // one.firstChild.nodeValue = new_text;
 }
  
-// add event listeners to each space on the table
+// add event listeners to each space on the table and enter data into boardStorage
 var one = document.getElementById("one");
 var two = document.getElementById("two");
 var three = document.getElementById("three");
@@ -50,22 +50,26 @@ var six = document.getElementById("six");
 var seven = document.getElementById("seven");
 var eight = document.getElementById("eight");
 var nine = document.getElementById("nine");
-one.addEventListener("click", function(){modifyText()}, false);
-two.addEventListener("click", function(){modifyText()}, false);
-three.addEventListener("click", function(){modifyText()}, false);
-four.addEventListener("click", function(){modifyText()}, false);
-five.addEventListener("click", function(){modifyText()}, false);
-six.addEventListener("click", function(){modifyText()}, false);
-seven.addEventListener("click", function(){modifyText()}, false);
-eight.addEventListener("click", function(){modifyText()}, false);
-nine.addEventListener("click", function(){modifyText()}, false);
+one.addEventListener("click", function(){modifyText(); boardStorage[0][0] = event.srcElement.textContent}, false);
+two.addEventListener("click", function(){modifyText(); boardStorage[0][1] = event.srcElement.textContent},  false);
+three.addEventListener("click", function(){modifyText(); boardStorage[0][2] = event.srcElement.textContent}, false);
+four.addEventListener("click", function(){modifyText(); boardStorage[1][0] = event.srcElement.textContent}, false);
+five.addEventListener("click", function(){modifyText(); boardStorage[1][1] = event.srcElement.textContent}, false);
+six.addEventListener("click", function(){modifyText(); boardStorage[1][2] = event.srcElement.textContent}, false);
+seven.addEventListener("click", function(){modifyText(); boardStorage[2][0] = event.srcElement.textContent}, false);
+eight.addEventListener("click", function(){modifyText(); boardStorage[2][1] = event.srcElement.textContent}, false);
+nine.addEventListener("click", function(){modifyText(); boardStorage[2][2] = event.srcElement.textContent}, false);
 
 
 // game logic methods
   // row check
+  // if row has all of the same pieces, game is over
+  // if row has one of each piece then move onto next row
+  // 
+
   // column check 
-  // major diagonal check - there is only 1
-  // minor diagonal check - there is only 1
+  // major diagonal check - there is only 1 diagonal
+  // minor diagonal check - there is only 1 diagonal
 
 
 
