@@ -50,15 +50,15 @@ var six = document.getElementById("six");
 var seven = document.getElementById("seven");
 var eight = document.getElementById("eight");
 var nine = document.getElementById("nine");
-one.addEventListener("click", function(){modifyText(); boardStorage[0][0] = event.srcElement.textContent; columnCheck(boardStorage); }, false);
-two.addEventListener("click", function(){modifyText(); boardStorage[0][1] = event.srcElement.textContent; columnCheck(boardStorage); },  false);
-three.addEventListener("click", function(){modifyText(); boardStorage[0][2] = event.srcElement.textContent; columnCheck(boardStorage); }, false);
-four.addEventListener("click", function(){modifyText(); boardStorage[1][0] = event.srcElement.textContent; columnCheck(boardStorage); }, false);
-five.addEventListener("click", function(){modifyText(); boardStorage[1][1] = event.srcElement.textContent; columnCheck(boardStorage); }, false);
-six.addEventListener("click", function(){modifyText(); boardStorage[1][2] = event.srcElement.textContent; columnCheck(boardStorage); }, false);
-seven.addEventListener("click", function(){modifyText(); boardStorage[2][0] = event.srcElement.textContent; columnCheck(boardStorage); }, false);
-eight.addEventListener("click", function(){modifyText(); boardStorage[2][1] = event.srcElement.textContent; columnCheck(boardStorage); }, false);
-nine.addEventListener("click", function(){modifyText(); boardStorage[2][2] = event.srcElement.textContent; columnCheck(boardStorage); }, false);
+one.addEventListener("click", function(){modifyText(); boardStorage[0][0] = event.srcElement.textContent; checkBoard(boardStorage); }, false);
+two.addEventListener("click", function(){modifyText(); boardStorage[0][1] = event.srcElement.textContent; checkBoard(boardStorage); },  false);
+three.addEventListener("click", function(){modifyText(); boardStorage[0][2] = event.srcElement.textContent; checkBoard(boardStorage); }, false);
+four.addEventListener("click", function(){modifyText(); boardStorage[1][0] = event.srcElement.textContent; checkBoard(boardStorage); }, false);
+five.addEventListener("click", function(){modifyText(); boardStorage[1][1] = event.srcElement.textContent; checkBoard(boardStorage); }, false);
+six.addEventListener("click", function(){modifyText(); boardStorage[1][2] = event.srcElement.textContent; checkBoard(boardStorage); }, false);
+seven.addEventListener("click", function(){modifyText(); boardStorage[2][0] = event.srcElement.textContent; checkBoard(boardStorage); }, false);
+eight.addEventListener("click", function(){modifyText(); boardStorage[2][1] = event.srcElement.textContent; checkBoard(boardStorage); }, false);
+nine.addEventListener("click", function(){modifyText(); boardStorage[2][2] = event.srcElement.textContent; checkBoard(boardStorage); }, false);
 
 
 // game logic methods
@@ -98,6 +98,7 @@ nine.addEventListener("click", function(){modifyText(); boardStorage[2][2] = eve
 
   // major diagonal check - there is only 1 diagonal
   // row 0,0 row 1,1 row 2,2 are the places on the board that need to be checked
+  // store those values in an array and check them at the end
   var majorDiagonalCheck = function(board) {
     var result = [];
     for (var i = 0; i < board.length; i++) {
@@ -114,8 +115,25 @@ nine.addEventListener("click", function(){modifyText(); boardStorage[2][2] = eve
   // row 0,2 row 1,1 row 2, 0 are the places that need to be checked
 
   var minorDiagonalCheck = function(board) {
-
+    var result = [];
+    counter = 0;
+    for (var i = board.length - 1; i >= 0; i--) {
+      result.push(board[counter][i]);
+      counter++;
+    }
+    if (result[0] === 'X' && result[1] === 'X' && result[2] === 'X') {
+      window.alert('X HAS WON THE GAME');
+    } else if (result[0] === 'O' && result[1] === 'O' && result[2] === 'O') {
+        window.alert('O HAS WON THE GAME');
+      }
   };
+
+  var checkBoard = function(board) {
+    rowCheck(board);
+    columnCheck(board);
+    majorDiagonalCheck(board);
+    minorDiagonalCheck(board);
+  }
 
 
 
