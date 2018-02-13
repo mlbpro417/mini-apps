@@ -50,24 +50,52 @@ var six = document.getElementById("six");
 var seven = document.getElementById("seven");
 var eight = document.getElementById("eight");
 var nine = document.getElementById("nine");
-one.addEventListener("click", function(){modifyText(); boardStorage[0][0] = event.srcElement.textContent}, false);
-two.addEventListener("click", function(){modifyText(); boardStorage[0][1] = event.srcElement.textContent},  false);
-three.addEventListener("click", function(){modifyText(); boardStorage[0][2] = event.srcElement.textContent}, false);
-four.addEventListener("click", function(){modifyText(); boardStorage[1][0] = event.srcElement.textContent}, false);
-five.addEventListener("click", function(){modifyText(); boardStorage[1][1] = event.srcElement.textContent}, false);
-six.addEventListener("click", function(){modifyText(); boardStorage[1][2] = event.srcElement.textContent}, false);
-seven.addEventListener("click", function(){modifyText(); boardStorage[2][0] = event.srcElement.textContent}, false);
-eight.addEventListener("click", function(){modifyText(); boardStorage[2][1] = event.srcElement.textContent}, false);
-nine.addEventListener("click", function(){modifyText(); boardStorage[2][2] = event.srcElement.textContent}, false);
+one.addEventListener("click", function(){modifyText(); boardStorage[0][0] = event.srcElement.textContent; columnCheck(boardStorage); }, false);
+two.addEventListener("click", function(){modifyText(); boardStorage[0][1] = event.srcElement.textContent; columnCheck(boardStorage); },  false);
+three.addEventListener("click", function(){modifyText(); boardStorage[0][2] = event.srcElement.textContent; columnCheck(boardStorage); }, false);
+four.addEventListener("click", function(){modifyText(); boardStorage[1][0] = event.srcElement.textContent; columnCheck(boardStorage); }, false);
+five.addEventListener("click", function(){modifyText(); boardStorage[1][1] = event.srcElement.textContent; columnCheck(boardStorage); }, false);
+six.addEventListener("click", function(){modifyText(); boardStorage[1][2] = event.srcElement.textContent; columnCheck(boardStorage); }, false);
+seven.addEventListener("click", function(){modifyText(); boardStorage[2][0] = event.srcElement.textContent; columnCheck(boardStorage); }, false);
+eight.addEventListener("click", function(){modifyText(); boardStorage[2][1] = event.srcElement.textContent; columnCheck(boardStorage); }, false);
+nine.addEventListener("click", function(){modifyText(); boardStorage[2][2] = event.srcElement.textContent; columnCheck(boardStorage); }, false);
 
 
 // game logic methods
   // row check
-  // if row has all of the same pieces, game is over
-  // if row has one of each piece then move onto next row
-  // 
+  // iterate through each row and check the value of spots 0,1,2
+  // if all three are equal send an alert that there is a winner
 
-  // column check 
+  var rowCheck = function(board) {
+    board.forEach(function(row) {
+      for (var i = 0; i < row.length; i++) {
+        if (board[i][0] === 'X' && board[i][1] === 'X' && board[i][2] === 'X') {
+          window.alert('X HAS WON THE GAME');
+        } else if (board[i][0] === 'O' && board[i][1] === 'O' && board[i][2] === 'O') {
+          window.alert('O HAS WON THE GAME');
+        }
+      }
+    }); 
+  };
+
+  // column check
+  // iterate through each column
+  // if all three are equal send an alert that there is a winner
+
+  var columnCheck = function(board) {
+    board.forEach(function(row) {
+      for (var i = 0; i < row.length; i++) {
+        if (board[0][i] === 'X' && board[1][i] === 'X' && board[2][i] === 'X') {
+          window.alert('X HAS WON THE GAME');
+        } else if (board[0][i] === 'O' && board[1][i] === 'O' && board[2][i] === 'O') {
+          window.alert('O HAS WON THE GAME');
+        }
+      }
+    });
+  };
+
+
+
   // major diagonal check - there is only 1 diagonal
   // minor diagonal check - there is only 1 diagonal
 
