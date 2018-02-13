@@ -6,12 +6,13 @@ console.log('hello world');
   // game board is 3x3 table
   // set up table in html
   // label them positions 1-9
+
   // set up board to store data in array 
   var boardStorage = [
     [[], [], []], 
     [[], [], []], 
     [[], [], []], 
-  ]
+  ];
 
 
 // game elements  
@@ -39,7 +40,9 @@ function modifyText() {
     }
 }
  
-// add event listeners to each space on the table and enter data into boardStorage
+// add event listeners to each space on the table and enter data into board
+// run all methods on the board after each piece is placed to check for a winner
+// reset the page
 var one = document.getElementById("one");
 var two = document.getElementById("two");
 var three = document.getElementById("three");
@@ -49,6 +52,7 @@ var six = document.getElementById("six");
 var seven = document.getElementById("seven");
 var eight = document.getElementById("eight");
 var nine = document.getElementById("nine");
+var reset = document.getElementById("button");
 one.addEventListener("click", function(){modifyText(); boardStorage[0][0] = event.srcElement.textContent; checkBoard(boardStorage); }, false);
 two.addEventListener("click", function(){modifyText(); boardStorage[0][1] = event.srcElement.textContent; checkBoard(boardStorage); },  false);
 three.addEventListener("click", function(){modifyText(); boardStorage[0][2] = event.srcElement.textContent; checkBoard(boardStorage); }, false);
@@ -58,11 +62,12 @@ six.addEventListener("click", function(){modifyText(); boardStorage[1][2] = even
 seven.addEventListener("click", function(){modifyText(); boardStorage[2][0] = event.srcElement.textContent; checkBoard(boardStorage); }, false);
 eight.addEventListener("click", function(){modifyText(); boardStorage[2][1] = event.srcElement.textContent; checkBoard(boardStorage); }, false);
 nine.addEventListener("click", function(){modifyText(); boardStorage[2][2] = event.srcElement.textContent; checkBoard(boardStorage); }, false);
+reset.addEventListener("click", function(){window.location.reload(false);}, false);
 
 
 // game logic methods
   // row check
-  // iterate through each row and check the value of spots 0,1,2
+  // iterate through each row and check the value of 0,1,2 in the array
   // if all three are equal send an alert that there is a winner
 
   var rowCheck = function(board) {
@@ -78,7 +83,7 @@ nine.addEventListener("click", function(){modifyText(); boardStorage[2][2] = eve
   };
 
   // column check
-  // iterate through each column
+  // iterate through each column which is the opposite of column
   // if all three are equal send an alert that there is a winner
 
   var columnCheck = function(board) {
@@ -98,6 +103,8 @@ nine.addEventListener("click", function(){modifyText(); boardStorage[2][2] = eve
   // major diagonal check - there is only 1 diagonal
   // row 0,0 row 1,1 row 2,2 are the places on the board that need to be checked
   // store those values in an array and check them at the end
+  // alert if there is a winner
+
   var majorDiagonalCheck = function(board) {
     var result = [];
     for (var i = 0; i < board.length; i++) {
@@ -112,6 +119,7 @@ nine.addEventListener("click", function(){modifyText(); boardStorage[2][2] = eve
 
   // minor diagonal check - there is only 1 diagonal
   // row 0,2 row 1,1 row 2, 0 are the places that need to be checked
+  // alert if there is a winner
 
   var minorDiagonalCheck = function(board) {
     var result = [];
@@ -126,6 +134,11 @@ nine.addEventListener("click", function(){modifyText(); boardStorage[2][2] = eve
         window.alert('O HAS WON THE GAME');
       }
   };
+  // function to run all check position methods
+  // check for ties by iterating through the board
+  // if a piece is in position, then push it to the results array
+  // if the board is full it is a tie game
+  // so if results equals 9 alert tie game
 
   var checkBoard = function(board) {
     rowCheck(board);
