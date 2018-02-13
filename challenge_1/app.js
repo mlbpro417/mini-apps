@@ -97,9 +97,25 @@ nine.addEventListener("click", function(){modifyText(); boardStorage[2][2] = eve
 
 
   // major diagonal check - there is only 1 diagonal
+  // row 0,0 row 1,1 row 2,2 are the places on the board that need to be checked
+  var majorDiagonalCheck = function(board) {
+    var result = [];
+    for (var i = 0; i < board.length; i++) {
+      result.push(board[i][i]);
+    }
+    if (result[0] === 'X' && result[1] === 'X' && result[2] === 'X') {
+      window.alert('X HAS WON THE GAME');
+    } else if (result[0] === 'O' && result[1] === 'O' && result[2] === 'O') {
+        window.alert('O HAS WON THE GAME');
+      }
+  };
+
   // minor diagonal check - there is only 1 diagonal
+  // row 0,2 row 1,1 row 2, 0 are the places that need to be checked
 
+  var minorDiagonalCheck = function(board) {
 
+  };
 
 
 
