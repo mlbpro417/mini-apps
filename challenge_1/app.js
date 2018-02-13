@@ -37,7 +37,6 @@ function modifyText() {
         isXTurn = true;
       }
     }
-  // one.firstChild.nodeValue = new_text;
 }
  
 // add event listeners to each space on the table and enter data into boardStorage
@@ -133,6 +132,19 @@ nine.addEventListener("click", function(){modifyText(); boardStorage[2][2] = eve
     columnCheck(board);
     majorDiagonalCheck(board);
     minorDiagonalCheck(board);
+
+    var results = [];
+
+    for (var i = 0; i < board.length; i++) {
+      board[i].forEach(function(item) {
+        if (item.length > 0) {
+          results.push(item);
+        }  
+      })
+    }
+    if (results.length === 9) {
+      window.alert('TIE GAME!');
+    }  
   }
 
 
