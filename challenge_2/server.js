@@ -13,8 +13,10 @@ app.post('/', function (req, res) {
   req.on('data', (chunk) => {
       body.push(chunk);
     }).on('end', () => {
-      body = Buffer.concat(body).toString();
-      res.end(body);
+      body = JSON.parse(Buffer.concat(body));
+      var test = transformData(body);
+      // console.log(test);
+      res.send(transformData(body));
     });
 });
 
@@ -26,6 +28,15 @@ app.post('/', function (req, res) {
 
 // break into two functions, first one simply puts out the first line 
 
+var transformData = function(data) {
+  var stringData = '';
+  categoryGrabber(data);
+  personalDataGrabber(data);
+  recurseData(data);
+  return categoryGrabber(data) + '\n' + recurseData(data); 
+}
+
+// grab categories first
 var categoryGrabber = function(teamData) {
   var results = [];
   for (var key in teamData) {
@@ -35,7 +46,7 @@ var categoryGrabber = function(teamData) {
   }
   return results.toString();
 };
-
+// grab personal data
 var personalDataGrabber = function (teamData) {
   var results = [];
   for (var key in teamData) {
@@ -46,19 +57,20 @@ var personalDataGrabber = function (teamData) {
   }
   return results.toString();
 };
-
+// recurse through JSON object
+var stringData = '';
   var recurseData = function (teamData) {
     if (teamData.children.length === 0) {
       return personalDataGrabber(teamData);
     } else {
     // iterate through one level below 
-      var stringData = '';
       for (var i = 0; i < teamData.children.length; i++) {
         stringData += personalDataGrabber(teamData.children[i]) + '\n';
+        recurseData(teamData.children[i]);
       }
       return stringData += personalDataGrabber(teamData);
     }
-  }   
+  }  
 
 
 app.listen(3000, () => console.log('app listening on port 3000'));

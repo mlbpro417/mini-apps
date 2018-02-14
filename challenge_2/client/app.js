@@ -14,14 +14,6 @@ but you may not assume a JSON record has any other specific properties; i.e. any
 must be mapped to a column in your CSV report.
 */
 
-
-// to do
-
-// make POST requests to the server
-  // link submit button in html to making a post request
-
-// user submitted data should be in json format 
-
 var dummyData = {
     "firstName": "Joshie",
     "lastName": "Wyattson",
@@ -74,9 +66,10 @@ var dummyData = {
 var handleSubmitData = function() {
   $('form').on('submit', function(e){
   e.preventDefault();
-  var inputData = $('#input')[0].value;
-  sendData(dummyData);
-  // console.log();
+  var inputData = JSON.stringify($('#input')[0].value);
+  //inputData = JSON.stringify(inputData);
+  sendData(inputData);
+  //console.log(JSON.stringify(inputData));
   });
 }();
 
@@ -88,10 +81,10 @@ var sendData = function(message) {
     data: JSON.stringify(message),
     contentType: 'application/json',
     success: function (data) {
-      console.log('Message sent', data);
+      console.log('Message sent');
     },
     error: function (data) {
-      console.error('Failed to send message', data);
+      console.error('Failed to send message');
     }
   });
 }
