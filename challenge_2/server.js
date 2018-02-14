@@ -19,8 +19,8 @@ app.post('/', function (req, res) {
 });
 
 
-// each property on the object needs to be sent as the first line in the csv data
-// each additional line is the data from the top to the bottom in the structure
+// each property on the object needs to be sent as the first line in the csv data aka categories
+// each additional line is the personal data from the top to the bottom in the structure
 // so first line is the very first person in the object and each additional is the person under him
 // recurse through the object to check to see if the person has children or not
 
@@ -45,20 +45,20 @@ var personalDataGrabber = function (teamData) {
     }
   }
   return results.toString();
-
-  var recurseData = function
-
-   if (teamData.children.length === 0) {
-    return teamData.individualSales;
-  } else {
-    // iterate through one level below 
-    var sales = 0;
-    for (var i = 0; i < teamData.children.length; i++) {
-      sales += totalSales(teamData.children[i]);
-    }
-    return sales + teamData.individualSales;
-    
-  }
 };
+
+  var recurseData = function (teamData) {
+    if (teamData.children.length === 0) {
+      return personalDataGrabber(teamData);
+    } else {
+    // iterate through one level below 
+      var stringData = '';
+      for (var i = 0; i < teamData.children.length; i++) {
+        stringData += personalDataGrabber(teamData.children[i]) + '\n';
+      }
+      return stringData += personalDataGrabber(teamData);
+    }
+  }   
+
 
 app.listen(3000, () => console.log('app listening on port 3000'));
