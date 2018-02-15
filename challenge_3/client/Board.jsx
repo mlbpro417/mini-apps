@@ -23,7 +23,7 @@ class Board extends React.Component {
 
 
   dropPieceIntoColumn(column) {
-  for (var i = this.state.board.length - 1; i >= 0; i--) {
+  for (let i = this.state.board.length - 1; i >= 0; i--) {
     if (this.state.board[i][column].length === 0) {
       if (this.state.isXTrue === true) {
         this.state.board[i][column] = 'X';
@@ -38,6 +38,34 @@ class Board extends React.Component {
     }
   }
 }
+
+
+  // todo 
+  // checkRows
+
+  // iterate through each row and check the value of each in the array
+  // if four in a row are equal send an alert that there is a winner
+  // set a variable equal to an empty string and add each to it
+  // if the result contains either XXXX or OOOO then declare a winner
+
+  checkRows(board) {
+    let resultString = '';
+    for (let i = 0; i < board.length; i++) {
+      for (let value of board[i].length) {
+        resultString += value;
+      }
+    }
+    console.log('THIS IS RESULT STRING', this.resultString);
+    if (resultString.includes('XXXX')) {
+      alert('X IS THE WINNER!');
+    } else if (resultString.includes('OOOO')) {
+      alert('O IS THE WINNER!');
+    }
+  }
+
+  // checkColumns
+  // checkMajorDiagonal
+  // checkMinorDiagonal
 
   handleClick(id) {
     console.log('Click happened', this.state);
