@@ -15,7 +15,8 @@ class Board extends React.Component {
         [[],[],[],[],[],[],[],[]],
         [[],[],[],[],[],[],[],[]],
         [[],[],[],[],[],[],[],[]]
-      ]
+      ],
+      isXTrue: true
     }
     //this.setPieceIntoBoardState = this.setPieceIntoBoardState.bind(this);
   }
@@ -24,7 +25,13 @@ class Board extends React.Component {
   dropPieceIntoColumn(column) {
   for (var i = this.state.board.length - 1; i >= 0; i--) {
     if (this.state.board[i][column].length === 0) {
-      this.state.board[i][column] = 'X';
+      if (this.state.isXTrue === true) {
+        this.state.board[i][column] = 'X';
+        this.state.isXTrue = false;
+      } else {
+        this.state.board[i][column] = 'O';
+        this.state.isXTrue = true;
+      }
       console.log(this.state.board);
       this.setState(this.state.board);
       return;
