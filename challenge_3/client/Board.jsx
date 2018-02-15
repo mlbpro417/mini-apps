@@ -4,21 +4,53 @@ import {render} from 'react-dom';
 class Board extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      board: [
+        [[],[],[],[],[],[],[],[]],
+        [[],[],[],[],[],[],[],[]],
+        [[],[],[],[],[],[],[],[]],
+        [[],[],[],[],[],[],[],[]],
+        [[],[],[],[],[],[],[],[]],
+        [[],[],[],[],[],[],[],[]],
+        [[],[],[],[],[],[],[],[]],
+        [[],[],[],[],[],[],[],[]]
+      ]
+    }
+    //this.setPieceIntoBoardState = this.setPieceIntoBoardState.bind(this);
   }
+
+
+  dropPieceIntoColumn(column) {
+  for (var i = this.state.board.length - 1; i >= 0; i--) {
+    if (this.state.board[i][column].length === 0) {
+      this.state.board[i][column] = 'X';
+      console.log(this.state.board);
+      this.setState(this.state.board);
+      return;
+    }
+  }
+}
+
+  handleClick(id) {
+    console.log('Click happened', this.state);
+    this.dropPieceIntoColumn(id);
+  }
+
   render () {
     return (
       <div id="board">
       <p>Welcome to Connect Four</p>
       <table>
         <tr id="columns">
-          <td id="columnZero">0</td>
-          <td id="columnOne">1</td>
-          <td id="columnTwo">2</td>
-          <td id="columnThree">3</td>
-          <td id="columnFour">4</td>
-          <td id="columnFive">5</td>
-          <td id="columnSix">6</td>
-          <td id="columnSeven">7</td>
+          <td id="columnZero" onClick={(e) => this.handleClick(0, e)}>0</td>
+          <td id="columnOne" onClick={(e) => this.handleClick(1, e)}>1</td>
+          <td id="columnTwo" onClick={(e) => this.handleClick(2, e)}>2</td>
+          <td id="columnThree" onClick={(e) => this.handleClick(3, e)}>3</td>
+          <td id="columnFour" onClick={(e) => this.handleClick(4, e)}>4</td>
+          <td id="columnFive" onClick={(e) => this.handleClick(5, e)}>5</td>
+          <td id="columnSix" onClick={(e) => this.handleClick(6, e)}>6</td>
+          <td id="columnSeven" onClick={(e) => this.handleClick(7, e)}>7</td>
         </tr>
         <tr id="rowZero">
           <td id="zeroZero">.</td>
@@ -101,7 +133,7 @@ class Board extends React.Component {
           <td id="sevenSeven">.</td>
         </tr>
       </table>
-    </div>
+      </div>
     )
   }
 }
