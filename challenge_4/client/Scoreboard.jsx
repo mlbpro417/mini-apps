@@ -5,7 +5,13 @@ class Scoreboard extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      currentRoll: 0,
+      currentRound: 1,
+      lastRoll: 0,
+      scoreboard: [[],[],[],[],[],[],[],[],[],[]]
+    };
+    //this.handleClick = this.handleClick.bind(this);
   }
 
   // to do 
@@ -19,7 +25,31 @@ class Scoreboard extends React.Component {
   getRandomNumber(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min; 
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  individualRoundOfBowling(pinsKnockedDown) {
+    if (pinsKnockedDown !== 10) {
+      this.state.scoreboard[this.state.currentRound - 1] = pinsKnockedDown;
+      this.setState(this.state.scoreboard);
+    } else {
+      this.state.scoreboard[this.state.currentRound - 1] = '10';
+      this.setState(this.state.scoreboard);
+      this.setState(this.state.currentRound ++);
+    }  
+  }
+
+  handleClick() {
+    console.log('i was clicked');
+    let numberOfPinsRemaining = 10 - this.state.currentRoll;
+    //console.log(numberOfPinsRemaining);
+    let pinsKnockedDown = this.getRandomNumber(0, numberOfPinsRemaining);
+    this.individualRoundOfBowling(pinsKnockedDown);
+    //this.state.currentRoll = number;
+    
+    //this.setState({currentRoll: 0});
+
+    //console.log(this.state.currentRoll);
   }
 
   // bowling game mechanics
@@ -27,10 +57,12 @@ class Scoreboard extends React.Component {
   // use a random number generator to bowl each turn from 0-10
   // there are two turns per round
   // if the bowler gets a 10 (strike) on turn 1, the turn is over
-  // after the first turn, calculate number of pins remaining 10 - (rng)
+   // after the first turn, calculate number of pins remaining 10 - (rng)
   // if the number if greater than 0 you get to take turn 2 
   // then repeat the rng again for the remaining amount of pins for turn 2
   // after turn 2 is complete, add the total number of pins knocked down to scoreboard for the round
+    
+  
 
   //scoring mechanics
   // if the first turn knocks down less than 10 pins, then go again
@@ -46,7 +78,9 @@ class Scoreboard extends React.Component {
   render() {
     return (
       <div>
-        This is a scoreboard
+        <button name="bowling" onClick={(e) => this.handleClick()}>Roll the ball!</button>
+        <div name="currentRoll">You rolled a {this.state.currentRoll}!!!</div>
+        <div name="currentRound">This is round {this.state.currentRound}.</div>
         <table>
           <tr>
             <td>Round 1</td>
@@ -61,22 +95,21 @@ class Scoreboard extends React.Component {
             <td>Round 10</td>
           </tr>
           <tr> 
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
+            <td>{this.state.scoreboard[0]}</td>
+            <td>{this.state.scoreboard[1]}</td>
+            <td>{this.state.scoreboard[2]}</td>
+            <td>{this.state.scoreboard[3]}</td>
+            <td>{this.state.scoreboard[4]}</td>
+            <td>{this.state.scoreboard[5]}</td>
+            <td>{this.state.scoreboard[6]}</td>
+            <td>{this.state.scoreboard[7]}</td>
+            <td>{this.state.scoreboard[8]}</td>
+            <td>{this.state.scoreboard[9]}</td>
           </tr>
         </table>  
       </div>
     );
   }
-
 }
 
 export default Scoreboard;
