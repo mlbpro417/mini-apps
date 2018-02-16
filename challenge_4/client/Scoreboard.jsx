@@ -8,10 +8,10 @@ class Scoreboard extends React.Component {
     this.state = {
       currentRoll: 0,
       currentRound: 1,
-      lastRoll: 0,
+      numberOfPinsRemaining: 10,
+      isSecondRoll: false,
       scoreboard: [[],[],[],[],[],[],[],[],[],[]]
     };
-    //this.handleClick = this.handleClick.bind(this);
   }
 
   // to do 
@@ -27,31 +27,6 @@ class Scoreboard extends React.Component {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-
-  individualRoundOfBowling(pinsKnockedDown) {
-    if (pinsKnockedDown !== 10) {
-      this.state.scoreboard[this.state.currentRound - 1] = pinsKnockedDown;
-      this.setState(this.state.scoreboard);
-    } else {
-      this.state.scoreboard[this.state.currentRound - 1] = '10';
-      this.setState(this.state.scoreboard);
-      this.setState(this.state.currentRound ++);
-    }  
-  }
-
-  handleClick() {
-    console.log('i was clicked');
-    let numberOfPinsRemaining = 10 - this.state.currentRoll;
-    //console.log(numberOfPinsRemaining);
-    let pinsKnockedDown = this.getRandomNumber(0, numberOfPinsRemaining);
-    this.individualRoundOfBowling(pinsKnockedDown);
-    //this.state.currentRoll = number;
-    
-    //this.setState({currentRoll: 0});
-
-    //console.log(this.state.currentRoll);
-  }
-
   // bowling game mechanics
   // there are 10 pins 
   // use a random number generator to bowl each turn from 0-10
@@ -61,8 +36,58 @@ class Scoreboard extends React.Component {
   // if the number if greater than 0 you get to take turn 2 
   // then repeat the rng again for the remaining amount of pins for turn 2
   // after turn 2 is complete, add the total number of pins knocked down to scoreboard for the round
+
+  individualRoundOfBowling(pinsKnockedDown) {
+    let numberOfPinsRemaining = 10 - pinsKnockedDown;
+    if (this.state.isSecondRoll === false) {
+      if (numberOfPinsRemaining > 0) {
+        this.state.scoreboard[this.state.currentRound - 1].push(pinsKnockedDown);
+        this.setState(this.state.scoreboard);
+        this.state.isSecondRoll = true;
+        this.setState(this.state.isSecondRoll);
+        this.state.numberOfPinsRemaining = numberOfPinsRemaining;
+        this.setState(this.state.numberOfPinsRemaining);
+      } else {
+        this.state.scoreboard[this.state.currentRound - 1] = 10;
+        this.setState(this.state.scoreboard);
+        this.state.numberOfPinsRemaining = 10;
+        this.setState(this.state.numberOfPinsRemaining);
+        this.setState(this.state.currentRound ++);
+      }  
+    }
+  }
+
+  secondRollOfIndividualRoundOfBowling(numberOfPinsRemaining) {
+    let secondRoundPinsRemaining = numberOfPinsRemaining;
+    if (numberOfPinsRemaining > 0) {
+        this.state.scoreboard[this.state.currentRound - 1].push(numberOfPinsRemaining);
+        this.setState(this.state.scoreboard);
+        this.state.isSecondRoll = false;
+        this.setState(this.state.isSecondRoll);
+        this.state.numberOfPinsRemaining = 10;
+        this.setState(this.state.numberOfPinsRemaining);
+        this.setState(this.state.currentRound ++);
+      } else {
+        this.state.scoreboard[this.state.currentRound - 1] = secondRoundPinsRemaining;
+        this.setState(this.state.scoreboard);
+        this.state.isSecondRoll = false;
+        this.setState(this.state.isSecondRoll);
+        this.state.numberOfPinsRemaining = 10;
+        this.setState(this.state.numberOfPinsRemaining);
+        this.setState(this.state.currentRound ++);
+      }  
+  }
+
+  handleClick() {
+    let numberOfPinsRemaining = this.state.numberOfPinsRemaining;
+    let pinsKnockedDown = this.getRandomNumber(0, numberOfPinsRemaining);
+    if (this.state.isSecondRoll === false) {
+      this.individualRoundOfBowling(pinsKnockedDown);   
+    } else {
+      this.secondRollOfIndividualRoundOfBowling(pinsKnockedDown);
+    }
     
-  
+  }
 
   //scoring mechanics
   // if the first turn knocks down less than 10 pins, then go again
